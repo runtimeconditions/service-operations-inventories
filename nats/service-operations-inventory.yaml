@@ -1,0 +1,232 @@
+apiVersion: runtimeconditions.io/service-operations/v1alpha1
+kind: RuntimeConditionsServiceOperationsInventory
+metadata:
+  name: nats.service
+  service: nats
+  operationCount: 26
+  semanticSha256: 0f6fb3a7c5f1f3c8c780724057ef96ca22a7b2d0c2766f493e22d5f444c88ee8
+  sources:
+  - repository: https://github.com/nats-io/nats-server.git
+    description: Core NATS protocol and authoritative JetStream API subjects
+  - repository: https://github.com/nats-io/nats.docs.git
+    description: NATS protocol and JetStream API documentation
+shapes:
+  nats.subject:
+    schema:
+      type: string
+      minLength: 1
+      pattern: ^[^\s]+$
+  nats.subjects:
+    schema:
+      type: array
+      minItems: 1
+      uniqueItems: true
+      items:
+        type: string
+        minLength: 1
+        pattern: ^[^\s]+$
+  nats.resourceName:
+    schema:
+      type: string
+      minLength: 1
+      pattern: ^[^\s.*>]+$
+operations:
+- name: connection.connect
+  resource: connection
+  action: connect
+- name: subject.publish
+  resource: subject
+  action: publish
+  inputs:
+    subject:
+      shape: nats.subject
+      required: true
+- name: subject.subscribe
+  resource: subject
+  action: subscribe
+  inputs:
+    subject:
+      shape: nats.subject
+      required: true
+- name: subject.request
+  resource: subject
+  action: request
+  inputs:
+    subject:
+      shape: nats.subject
+      required: true
+- name: stream.create
+  resource: stream
+  action: create
+  inputs:
+    streamName:
+      shape: nats.resourceName
+      required: true
+    subjects:
+      shape: nats.subjects
+      required: false
+- name: stream.update
+  resource: stream
+  action: update
+  inputs:
+    streamName:
+      shape: nats.resourceName
+      required: true
+    subjects:
+      shape: nats.subjects
+      required: false
+- name: stream.delete
+  resource: stream
+  action: delete
+  inputs:
+    streamName:
+      shape: nats.resourceName
+      required: true
+- name: stream.inspect
+  resource: stream
+  action: inspect
+  inputs:
+    streamName:
+      shape: nats.resourceName
+      required: true
+- name: stream.publish
+  resource: stream
+  action: publish
+  inputs:
+    subject:
+      shape: nats.subject
+      required: true
+- name: consumer.create
+  resource: consumer
+  action: create
+  inputs:
+    streamName:
+      shape: nats.resourceName
+      required: true
+    consumerName:
+      shape: nats.resourceName
+      required: false
+- name: consumer.update
+  resource: consumer
+  action: update
+  inputs:
+    streamName:
+      shape: nats.resourceName
+      required: true
+    consumerName:
+      shape: nats.resourceName
+      required: false
+- name: consumer.delete
+  resource: consumer
+  action: delete
+  inputs:
+    streamName:
+      shape: nats.resourceName
+      required: true
+    consumerName:
+      shape: nats.resourceName
+      required: true
+- name: consumer.inspect
+  resource: consumer
+  action: inspect
+  inputs:
+    streamName:
+      shape: nats.resourceName
+      required: true
+    consumerName:
+      shape: nats.resourceName
+      required: true
+- name: consumer.consume
+  resource: consumer
+  action: consume
+  inputs:
+    streamName:
+      shape: nats.resourceName
+      required: true
+    consumerName:
+      shape: nats.resourceName
+      required: false
+- name: key_value.create
+  resource: key_value
+  action: create
+  inputs:
+    bucketName:
+      shape: nats.resourceName
+      required: true
+- name: key_value.delete
+  resource: key_value
+  action: delete
+  inputs:
+    bucketName:
+      shape: nats.resourceName
+      required: true
+- name: key_value.inspect
+  resource: key_value
+  action: inspect
+  inputs:
+    bucketName:
+      shape: nats.resourceName
+      required: true
+- name: key_value.read
+  resource: key_value
+  action: read
+  inputs:
+    bucketName:
+      shape: nats.resourceName
+      required: true
+- name: key_value.write
+  resource: key_value
+  action: write
+  inputs:
+    bucketName:
+      shape: nats.resourceName
+      required: true
+- name: key_value.watch
+  resource: key_value
+  action: watch
+  inputs:
+    bucketName:
+      shape: nats.resourceName
+      required: true
+- name: object_store.create
+  resource: object_store
+  action: create
+  inputs:
+    bucketName:
+      shape: nats.resourceName
+      required: true
+- name: object_store.delete
+  resource: object_store
+  action: delete
+  inputs:
+    bucketName:
+      shape: nats.resourceName
+      required: true
+- name: object_store.inspect
+  resource: object_store
+  action: inspect
+  inputs:
+    bucketName:
+      shape: nats.resourceName
+      required: true
+- name: object_store.read
+  resource: object_store
+  action: read
+  inputs:
+    bucketName:
+      shape: nats.resourceName
+      required: true
+- name: object_store.write
+  resource: object_store
+  action: write
+  inputs:
+    bucketName:
+      shape: nats.resourceName
+      required: true
+- name: object_store.watch
+  resource: object_store
+  action: watch
+  inputs:
+    bucketName:
+      shape: nats.resourceName
+      required: true
